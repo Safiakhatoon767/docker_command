@@ -2,6 +2,8 @@
 sudo apt-get update 
 sudo apt-get install docker.io
 
+
+
 ### Workflow Analysis
 1. **Commands Related to Groups and Permissions**:
    - `sudo usermod -aG docker $USER`: Adds the current user to the `docker` group, enabling non-sudo access to Docker commands. 
