@@ -1,0 +1,58 @@
+
+sudo apt-get update 
+sudo apt-get install docker.io
+
+### Workflow Analysis
+1. **Commands Related to Groups and Permissions**:
+   - `sudo usermod -aG docker $USER`: Adds the current user to the `docker` group, enabling non-sudo access to Docker commands. 
+   - **Note**: After this, a system reboot (`sudo reboot`) or re-login is necessary to apply group changes.
+
+2. **Docker Basics**:
+   - `docker ps`: Lists running containers.
+   - `docker ps -a`: Lists all containers (including stopped ones).
+
+3. **Pulling and Running Containers**:
+   - `docker pull mysql`: Pulls the latest MySQL image from Docker Hub.
+   - `docker run mysql`: Runs a container from the MySQL image (basic run without configuration).
+   - `docker run -e MYSQL_ROOT_PASSWORD=test@123 mysql:latest`: Creates a MySQL container with a root password set.
+   - **Note**: Always set secure passwords for production use.
+
+4. **Container Management**:
+   - `docker kill <container_id>`: Forcibly stops a container.
+   - `docker start <container_id>` and `docker stop <container_id>`: Start and stop containers gracefully.
+   - `docker remove <container_id>`: Removes stopped containers.
+
+5. **Running Specific Applications**:
+   - `docker run -d -p 80:80 nginx:latest`: Runs an Nginx container in detached mode, mapping host port 80 to container port 80.
+   - `docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:latest`: Starts a MySQL container with port mapping.
+
+6. **Accessing Containers**:
+   - `docker exec -it <container_id> bash`: Accesses a running container's shell interactively.
+
+---
+
+### Removing History Numbers
+To clean the history and display commands without numbers:
+1. Run the command:
+   ```bash
+   history | awk '{$1=""; print $0}'
+   ```
+   This will show the command history without numbers.
+
+2. Alternatively, write the history to a file without numbers:
+   ```bash
+   history | awk '{$1=""; print $0}' > cleaned_history.txt
+   ```
+
+---
+
+### Best Practices
+- Use descriptive container names with the `--name` flag for easier management:
+  ```bash
+  docker run -d --name my-mysql -e MYSQL_ROOT_PASSWORD=root mysql:latest
+  ```
+- Regularly clean up unused Docker resources to save space:
+  ```bash
+  docker system prune -a
+  ```
+- Use Docker Compose for managing multi-container applications.
